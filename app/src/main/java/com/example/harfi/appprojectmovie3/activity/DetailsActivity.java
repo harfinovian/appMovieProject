@@ -39,9 +39,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DetailsActivity extends AppCompatActivity {
 
+    public static String BASE_URL = "http://api.themoviedb.org/";
+    public static String IMG_URL = "http://image.tmdb.org/t/p/w500";
     private ProgressDialog pDialog;
     private CheckBox favoriteBt;
     private Bundle b;
+    private Call<MovieDetails> call;
     Realm realm = Realm.getDefaultInstance();
 
     @Override
@@ -90,13 +93,14 @@ public class DetailsActivity extends AppCompatActivity {
         if(query == null) {
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://api.themoviedb.org/")
+                    .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
             MovieService movieService = retrofit.create(MovieService.class);
 
-            movieService.getDetails(b.getLong("movieId")).enqueue(new Callback<MovieDetails>() {
+            call = movieService.getDetails(b.getLong("movieId"));
+            call.enqueue(new Callback<MovieDetails>() {
                 @Override
                 public void onResponse(Call<MovieDetails> call, Response<MovieDetails> response) {
                     MovieDetails Details = response.body();
@@ -123,6 +127,7 @@ public class DetailsActivity extends AppCompatActivity {
     }
     @Override
     public boolean onSupportNavigateUp() {
+        if(call != null) call.cancel();
         onBackPressed();
         return true;
     }
@@ -137,7 +142,7 @@ public class DetailsActivity extends AppCompatActivity {
         TextView runtime = (TextView)findViewById(R.id.timeTx);
 
         Glide.with(DetailsActivity.this)
-                .load("http://image.tmdb.org/t/p/w500" + temp.getPoster_path())
+                .load(IMG_URL + temp.getPoster_path())
                 .thumbnail(0.5f)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

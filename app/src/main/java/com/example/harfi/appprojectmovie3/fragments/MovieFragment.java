@@ -30,6 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MovieFragment extends Fragment{
 
+    public static String BASE_URL = "http://api.themoviedb.org/";
     private View myFragment;
     private ProgressDialog pDialog;
     private RecyclerView rView;
@@ -147,7 +148,7 @@ public class MovieFragment extends Fragment{
                 public void onResponse(Call<Report> call, Response<Report> response) {
                     final Report report = response.body();
 
-                    Log.e("factory", report.getResults().get(0).getPoster_path().toString());
+                    //Log.e("factory", report.getResults().get(0).getPoster_path().toString());
 
                     RealmResults<Results> results = getResult();
 
@@ -182,7 +183,7 @@ public class MovieFragment extends Fragment{
     }
     private MovieService retrofitConnect(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.themoviedb.org/")
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
