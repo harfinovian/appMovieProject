@@ -20,6 +20,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
     private Context context;
     private RealmResults<Results> temp;
 
+    public void setTemp(RealmResults<Results> temp) {
+        this.temp = temp;
+        notifyDataSetChanged();
+    }
+
     public RecyclerViewAdapter(Context context, RealmResults<Results> data) {
         this.temp = data;
         this.context = context;

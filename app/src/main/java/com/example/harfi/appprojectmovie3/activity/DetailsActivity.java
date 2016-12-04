@@ -126,24 +126,7 @@ public class DetailsActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_refresh:
-                // About option clicked.
-                return true;
-            case R.id.action_settings:
-                // Settings option clicked.
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+
     private void fillLayout(final MovieDetails temp){
 
         final ImageView movieImg = (ImageView)findViewById(R.id.moviePic);

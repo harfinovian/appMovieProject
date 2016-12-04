@@ -2,26 +2,21 @@ package com.example.harfi.appprojectmovie3.fragments;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.harfi.appprojectmovie3.R;
-import com.example.harfi.appprojectmovie3.activity.MainActivity;
 import com.example.harfi.appprojectmovie3.adapter.RecyclerViewAdapter;
 import com.example.harfi.appprojectmovie3.model.Report;
 import com.example.harfi.appprojectmovie3.model.Results;
-import com.example.harfi.appprojectmovie3.model.VideoDetails;
 import com.example.harfi.appprojectmovie3.model.api.MovieService;
 
 import io.realm.Realm;
@@ -38,6 +33,9 @@ public class MovieFragment extends Fragment{
     private View myFragment;
     private ProgressDialog pDialog;
     private RecyclerView rView;
+    RecyclerViewAdapter rcAdapter;
+    private SwipeRefreshLayout refreshLayout;
+    public boolean refreshData, viewCreated;
     Realm realm = Realm.getDefaultInstance();
 
     public MovieFragment() {
@@ -95,20 +93,12 @@ public class MovieFragment extends Fragment{
         rView.setLayoutManager(lLayout);
         rView.setItemAnimator(new DefaultItemAnimator());
 
-        getAllItemList();
-
-        final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) myFragment.findViewById(R.id.refreshContainer);
+        refreshLayout = (SwipeRefreshLayout) myFragment.findViewById(R.id.refreshContainer);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                refreshData = true;
                 getAllItemList();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        getAllItemList();
-                        refreshLayout.setRefreshing(false);
-                    }
-                },1000);
             }
         });
 
@@ -116,24 +106,39 @@ public class MovieFragment extends Fragment{
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        viewCreated = true;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getAllItemList();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        viewCreated = false;
+    }
+
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
         // Make sure that we are currently visible
-        if (this.isVisible()) {
+        if (isVisibleToUser && viewCreated) {
             // If we are becoming invisible, then...
             getAllItemList();
-            if (!isVisibleToUser) {
-                Log.d("MyFragment", "Not visible anymore.  Stopping audio.");
-                // TODO stop audio playback
-            }
         }
     }
 
     private void getAllItemList(){
 
-        pDialog.setMessage("Loading Content...");
-        pDialog.show();
+        if (!refreshLayout.isRefreshing()) {
+            refreshLayout.setRefreshing(true);
+        }
 
         if(!getArguments().getString("category").equals("favorite")) {
             MovieService movie = retrofitConnect();
@@ -155,10 +160,6 @@ public class MovieFragment extends Fragment{
                         insert.setCategory(getArguments().getString("category"));
                     }
                     realm.commitTransaction();
-
-                    RecyclerViewAdapter rcAdapter = new RecyclerViewAdapter(getContext(), getResult());
-                    rView.setAdapter(rcAdapter);
-                    Log.e("Database", "data : " + realm.where(Results.class).findAll());
                 }
 
                 @Override
@@ -168,23 +169,16 @@ public class MovieFragment extends Fragment{
                 }
             });
         }
-        RecyclerViewAdapter rcAdapter = new RecyclerViewAdapter(getContext(), getResult());
-        rView.setAdapter(rcAdapter);
-
-        pDialog.hide();
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_refresh:
-                getAllItemList();
-                return true;
-            case R.id.action_settings:
-                // Settings option clicked.
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if(rView.getAdapter() == null || rcAdapter == null || refreshData  == true) {
+            rcAdapter = new RecyclerViewAdapter(getContext(), getResult());
+            rView.setAdapter(rcAdapter);
+            Log.e("Database", "data : " + realm.where(Results.class).findAll());
+        }else if(rcAdapter != null){
+            rcAdapter.setTemp(getResult());
         }
+
+        refreshData = false;
+        refreshLayout.setRefreshing(false);
     }
     private MovieService retrofitConnect(){
         Retrofit retrofit = new Retrofit.Builder()
