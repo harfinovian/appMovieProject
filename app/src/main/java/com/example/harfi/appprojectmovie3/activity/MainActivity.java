@@ -8,8 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.example.harfi.appprojectmovie3.fragments.MovieFragment;
 import com.example.harfi.appprojectmovie3.R;

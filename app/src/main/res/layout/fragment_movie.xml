@@ -3,7 +3,8 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:configChanges="orientation|screenSize">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refreshContainer"

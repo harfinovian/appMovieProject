@@ -1,89 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
 
-    <LinearLayout
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/white">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.Toolbar>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:minHeight="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </android.support.v7.widget.Toolbar>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorDetailComponent"
-                android:textColor="@android:color/white"
-                android:textSize="40dp"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingTop="30dp"
-                android:paddingBottom="30dp"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="5dp">
-
-                <ImageView
-                    android:id="@+id/moviePic"
-                    android:layout_width="200dp"
-                    android:layout_height="180dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="5dp"
-                    android:weightSum="1">
-
-                    <TextView
-                        android:id="@+id/yearTx"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
-                    <TextView
-                        android:id="@+id/timeTx"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                        android:textStyle="italic" />
-                    <TextView
-                        android:id="@+id/ratingTx"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@android:color/black"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
-                    <CheckBox
-                        android:id="@+id/favorite"
-                        android:layout_width="80dp"
-                        android:layout_height="37dp"
-                        android:text="MARK AS FAVORITE"
-                        android:textSize="8sp"
-                        android:button="@android:drawable/btn_star"
-                        android:paddingRight="@dimen/small_margin"
-                        android:background="@color/buttonBackground"
-                        android:textColor="@drawable/button_color" />
-
-                </LinearLayout>
-
-            </LinearLayout>
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -91,22 +28,92 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/desc"
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorDetailComponent"
+                    android:textColor="@android:color/white"
+                    android:textSize="40dp"
                     android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:paddingTop="@dimen/activity_vertical_margin"
-                    android:paddingBottom="@dimen/small_margin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:paddingTop="30dp"
+                    android:paddingBottom="30dp"/>
 
-                <FrameLayout
-                    android:id="@+id/container_body"
-                    android:background="#FFF"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
 
+                    <ImageView
+                        android:id="@+id/moviePic"
+                        android:layout_width="200dp"
+                        android:layout_height="180dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="5dp"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:id="@+id/yearTx"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+                        <TextView
+                            android:id="@+id/timeTx"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                            android:textStyle="italic" />
+                        <TextView
+                            android:id="@+id/ratingTx"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/black"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                        <CheckBox
+                            android:id="@+id/favorite"
+                            android:layout_width="80dp"
+                            android:layout_height="37dp"
+                            android:text="MARK AS FAVORITE"
+                            android:textSize="8sp"
+                            android:button="@android:drawable/btn_star"
+                            android:paddingRight="@dimen/small_margin"
+                            android:background="@color/buttonBackground"
+                            android:textColor="@drawable/button_color" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/desc"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:paddingTop="@dimen/activity_vertical_margin"
+                        android:paddingBottom="@dimen/small_margin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <FrameLayout
+                        android:id="@+id/container_body"
+                        android:background="#FFF"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
-    </LinearLayout>
-</ScrollView>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

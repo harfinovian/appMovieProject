@@ -1,5 +1,6 @@
 package com.example.harfi.appprojectmovie3.model.api;
 
+import com.example.harfi.appprojectmovie3.BuildConfig;
 import com.example.harfi.appprojectmovie3.model.MovieDetails;
 import com.example.harfi.appprojectmovie3.model.Report;
 import com.example.harfi.appprojectmovie3.model.VideoList;
@@ -13,12 +14,15 @@ import retrofit2.http.Path;
  */
 
 public interface MovieService {
-    @GET("3/movie/{category}?api_key=f3d6c212736aa31051a3ec995ec96151")
+
+    public static final String API_KEY= BuildConfig.API_KEY;
+
+    @GET("3/movie/{category}?api_key="+API_KEY)
     Call<Report> getMovie(@Path("category") String category);
 
-    @GET("3/movie/{movieId}?api_key=f3d6c212736aa31051a3ec995ec96151")
+    @GET("3/movie/{movieId}?api_key="+API_KEY)
     Call<MovieDetails> getDetails(@Path("movieId") Long movieId);
 
-    @GET("3/movie/{movieId}/videos?api_key=f3d6c212736aa31051a3ec995ec96151")
+    @GET("3/movie/{movieId}/videos?api_key=f"+API_KEY)
     Call<VideoList> getVideo(@Path("movieId") Long movieId);
 }
